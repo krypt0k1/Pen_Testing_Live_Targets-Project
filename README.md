@@ -201,7 +201,7 @@ How to document and recreate this exploit:
 	
 	
 	
-# Vulnerability #2: Cross Site Request Forgery (CSRF)
+# Vulnerability #2: ---- 
 
 Description:
 
