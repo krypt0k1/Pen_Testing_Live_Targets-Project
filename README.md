@@ -218,11 +218,10 @@ How to document and recreate this exploit:
 	
 Upon inspection of the HTML form at URL https://35.184.88.145/red/public/staff/salespeople/edit.php?id=1, I noticed that the site accepts any value for the CSRF token. This allowed for the following HTML page to be created to perform a Cross-Site Request Forgery attack to edit the users details. 
 
-![image](https://user-images.githubusercontent.com/111711434/200211251-34f6e313-53dc-4274-b875-3dd53e05f111.png)
-
+![image](https://user-images.githubusercontent.com/111711434/200218318-aa40edc9-f51e-4789-a154-83c5181e0f09.png)
 
 Demonstration:
-![CSRF](https://user-images.githubusercontent.com/111711434/200211277-eec81686-810d-404d-ad57-8e3b52c83f31.gif)
+![red csrf](https://user-images.githubusercontent.com/111711434/200218427-05666440-daf7-43ac-b9d3-2eabca1fa70c.gif)
 
 
 ## Notes
