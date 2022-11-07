@@ -21,15 +21,16 @@ Each color is vulnerable to only 2 of the 6 possible exploits. First discover wh
 
 Description: 
 
-A Session Hijacking attack is an exploit the seeks to manipulate the web session control mechanism by sending a request to a web server with an authenticated SessionID, Cookie or a combination of both. Web servers grant a token to a client browser after authentication, said token can be used to hijack another users's session. By masquerding your browsers token as the authenticated token, the web server will recognize you as an authenticated user, granting you access. 
+A Session Hijacking attack is an exploit that seeks to manipulate the web session control mechanism by sending a request to a web server with an authenticated SessionID, Cookie, or a combination of both. Web servers grant a token to a client browser after authentication; said token can be used to hijack another user's session. By masquerading your browser token as the authenticated token, the web server will recognize you as an authenticated user, granting you access. 
 
 How to document and recreate this exploit:
 
-1. First visit https://104.198.208.81/blue/public/staff/login.php and login using the pperson credentials. 
-2. Then go to https://104.198.208.81/blue/public/hacktools/change_session_id.php to see your current PHPSESSIONID, store that information for later. 
-3. Open another browser such as Firefox or Chrome and visit https://104.198.208.81/blue/public/hacktools/change_session_id.php, copy the authenticated PHPSESSIONID to replace the your Session ID. 
-4. Next visit https://104.198.208.81/blue/public/login.php, you should see that you are already logged in. 
+1. First visit https://104.198.208.81/blue/public/staff/login.php and log in using the pperson credentials. 
+2. Go to https://104.198.208.81/blue/public/hacktools/change_session_id.php to see your current PHPSESSIONID, and store that information for later. 
+3. Open another browser such as Firefox or Chrome, visit https://104.198.208.81/blue/public/hacktools/change_session_id.php, and copy the authenticated PHPSESSIONID to replace your Session ID. 
+4. Next visit https://104.198.208.81/blue/public/login.php; you should see that you are already logged in. 
 5. We successfully bypassed authentication.
+
 
 ![Session Hijacking Exploit](https://user-images.githubusercontent.com/111711434/200113050-d1337254-f6f5-4351-b27f-76912f7a5866.gif)
 
@@ -37,6 +38,8 @@ How to document and recreate this exploit:
 # Vulnerability 2: SQL Injections
 
 Description: 
+
+SQL Injections are an attack that seeks to exploit vulnerabilities in an application's input validation for SQL queries. Malicious code is injected into a query that can reveal data found in the database, such as passwords, usernames, emails, etc.  
 
 How to document and recreate this exploit:
 
@@ -50,7 +53,7 @@ How to document and recreate this exploit:
      * Title: AND boolean-based blind - WHERE or HAVING clause
      * Payload: id=3' AND 2971=2971 AND 'bcTH'='bcTH
     
-      Comments after testing: Returned the information for User Irene Boling, see below:
+    Comments after testing: Returned the information for User Irene Boling; see below:
    
    
   * Irene Boling
@@ -64,7 +67,7 @@ How to document and recreate this exploit:
    * Payload: id=3' AND (SELECT 8396 FROM (SELECT(SLEEP(5)))PBWw) AND 'pCMl'='pCMl 
    
    
-     Comments after testing: Changed (SlEEP(5))))PBWw) to SLEEP(200000))))PBWw and it created a Denial of Service for the time   set. 
+     Comments after testing: Changed (SLEEP(5))))PBWw) to SLEEP(200000))))PBWw, and it created a Denial of Service for the time set. 
    ![Denial of Service after SQL injection  ](https://user-images.githubusercontent.com/111711434/200140448-3da3ba36-f3b6-4bcf-a079-b24d6592906c.png)
 
    * Type: UNION query
@@ -72,7 +75,7 @@ How to document and recreate this exploit:
    - Payload: id=-8495' UNION ALL SELECT  CONCAT(0x716b766a71,0x6b544944475a6778655979637a6558776b595163416a567459494a735864556b4f55666875547352,0x7171717a71),NULL,NULL,NULL,NULL-- -
 
 
-Comments after testing: Redirects back to the 'Find a Salesperson' web page.
+Comments after testing: Redirects to the 'Find a Salesperson' web page.
 
 The scan revelead the following information that can further assist us:
 * Web Server OS : Linux Ubuntu 16.04 or 16.10
@@ -114,8 +117,7 @@ Moreover, SQLMap also located & revealed the following password hashes:
 
 
 
- Using the integrated dictionary-based password cracker (mysql_passwd) the password for root was found:
-
+Using the integrated dictionary-based password cracker (mysql_passwd), the password for root was found:
 
 database management system users password hashes:                                                                                                                               
 
@@ -135,10 +137,13 @@ database management system users password hashes:
 
 Description:
 
+User enumeration is a method of discovering users on a database by analyzing the errors returned at a login prompt. An example would be entering credentials and the error displaying as "Unknown user" but trying different credentials and getting a "Password Incorrect or password does not match", which confirms that the user exists in the system. We can then work towards obtaining their password credentials through other means.
+
 How to document and recreate this exploit:
 
 1. Visit https://104.198.208.81/green/public/staff/login.php
-2. Attempt to log on with a random username & password, you will notice that the error returns as "Log in was unsuccesful"; however, upon attempting to enter a known user such as pperson with a wrong password the same error returned but in bold(different CSS class), confirming the user exists in the database. 
+2. Attempt to log on with a random username & password; you will notice that the error returns as "Login was unsuccessful." However, upon attempting to enter a known user, such as pperson with a wrong password, the same error returned but in bold(different CSS class), confirming the user exists in the database. 
+
 
 ![User Enumeration ](https://user-images.githubusercontent.com/111711434/200143718-b1ebb1ae-5fd7-4d2f-a9ee-1dfd6b6dd1f6.gif)
 
@@ -148,12 +153,15 @@ How to document and recreate this exploit:
 
 Description: 
 
+Cross-Site Scripting(XSS) is an exploit in which a script can be executed via a web browser on behalf of the web application. The effects of XSS can result in account compromise, deletion, privilege escalation, malware infection, and more.  
+
+Source: https://www.geeksforgeeks.org/what-is-cross-site-scripting-xss/
+
 How to document and recreate this exploit:
 
 1. Visit https://104.198.208.81/green/public/
-2. Then go to https://104.198.208.81/green/public/contact.php, the 'Contact' form is possible point of injection for XSS. 
+2. Go to https://104.198.208.81/green/public/contact.php; the 'Contact' form is a possible injection point.
    ![image](https://user-images.githubusercontent.com/111711434/200144285-d3869f55-8a9f-479e-911b-a2b0b612a750.png)
-
      
 3. Fill out the fields:
   * Name: Test
@@ -173,7 +181,9 @@ How to document and recreate this exploit:
 # Vulnerability #1: Insecure Direct Object Reference (IDOR)
 
 	
-Description:
+Description: 
+
+Insecure Direct Object References are a type of vulnerability in which user-supplied input can be used to access data directly, such as (id?=, uid=, pid, etc). If access control is not configured correctly, users can see across other pages by changing the value of the ‘id=’. 
 
 How to document and recreate this exploit:
 	
@@ -191,21 +201,38 @@ How to document and recreate this exploit:
 * ID=11 revelead information on Lazy Lazyman, an employee that was fired.
   ![image](https://user-images.githubusercontent.com/111711434/200144538-ad5dce27-82e2-43c7-bca9-d066dccad206.png)
 
+	
+	
+	
+# Vulnerability #2: Cross Site Request Forgery
+
+Description: 
+
+CSRF is an attack that preys on social engineering to execute HTML code to perform malicious actions on an authenticated user. The attack surface of CSRF spans from changing usernames to emails, passwords, and any other action allowed by the user on the site. 
+	
+	
+
+https://www.geeksforgeeks.org/what-is-cross-site-request-forgery-csrf/
+	
+How to document and recreate this exploit:	
+	
+Upon inspection of the HTML form at URL https://35.184.88.145/red/public/staff/salespeople/edit.php?id=1, I noticed that the site accepts any value for the CSRF token. This allowed for the following HTML page to be created to perform a Cross-Site Request Forgery attack to edit the users details. 
+
+![image](https://user-images.githubusercontent.com/111711434/200211251-34f6e313-53dc-4274-b875-3dd53e05f111.png)
 
 
-  
-
-	
-	
-	
-	
-	
-	
-# Vulnerability #2: ---- 
-
-Description:
+Demonstration:
+![CSRF](https://user-images.githubusercontent.com/111711434/200211277-eec81686-810d-404d-ad57-8e3b52c83f31.gif)
 
 
 ## Notes
 
-Describe any challenges encountered while doing the work
+Sources utilized:
+1. https://www.geeksforgeeks.org/sql-injection-cheat-sheet/
+2. https://www.sqlinjection.net/union/
+3. https://github.com/payloadbox/sql-injection-payload-list
+4. https://owasp.org/www-community/attacks/Session_hijacking_attack
+5. https://portswigger.net/web-security/cross-site-scripting/cheat-sheet
+6. https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html
+	
+
