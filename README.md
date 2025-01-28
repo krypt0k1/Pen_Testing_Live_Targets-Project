@@ -13,7 +13,7 @@ The six possible exploits are:
 * Cross-Site Request Forgery (CSRF)
 * Session Hijacking/Fixation
 
-Each color is vulnerable to only 2 of the 6 possible exploits. First discover which color has the specific vulnerability, then write a short description of how to exploit it, and finally demonstrate it using screenshots compiled into a GIF.
+Each color is vulnerable to only 2 of the 6 possible exploits. First, discover which color has the specific vulnerability, then write a short description of how to exploit it, and finally demonstrate it using screenshots compiled into a GIF.
 
 ## Blue
 
@@ -35,7 +35,7 @@ How to document and recreate this exploit:
 ![Session Hijacking Exploit](https://user-images.githubusercontent.com/111711434/200113050-d1337254-f6f5-4351-b27f-76912f7a5866.gif)
 
 
-# Vulnerability 2: SQL Injections
+# Vulnerability #2: SQL Injections
 
 Description: 
 
@@ -43,7 +43,7 @@ SQL Injections are an attack that seeks to exploit vulnerabilities in an applica
 
 How to document and recreate this exploit:
 
-1. First visit https://104.198.208.81/blue/public/staff/login.php and login using the pperson credentials. 
+1. First visit https://104.198.208.81/blue/public/staff/login.php and log in using the pperson credentials. 
 2. Then head on over to URL https://104.198.208.81/blue/public/salesperson.php?id=1 
 3. Using BurpSuite, GET request file as a TXT file. We will feed this information to a tool called SQLMap with the following parameter: sqlmap -r /home/kali/sqlmal-dev/request.txt -a (the -a parameter will return EVERYTHING, at times not recommended)
 4. SQLMap detects a vulnerability in the 'id=' field and provides us with three SQL injections:
@@ -204,7 +204,7 @@ How to document and recreate this exploit:
 	
 	
 	
-# Vulnerability #2: Cross Site Request Forgery
+# Vulnerability #2: Cross-Site Request Forgery
 
 Description: 
 
@@ -216,7 +216,7 @@ https://www.geeksforgeeks.org/what-is-cross-site-request-forgery-csrf/
 	
 How to document and recreate this exploit:	
 	
-Upon inspection of the HTML form at URL https://35.184.88.145/red/public/staff/salespeople/edit.php?id=1, I noticed that the site accepts any value for the CSRF token. This allowed for the following HTML page to be created to perform a Cross-Site Request Forgery attack to edit the users details. 
+Upon inspection of the HTML form at URL https://35.184.88.145/red/public/staff/salespeople/edit.php?id=1, I noticed that the site accepts any value for the CSRF token. This allowed for the following HTML page to be created to perform a Cross-Site Request Forgery attack to edit the user's details. 
 
 ![image](https://user-images.githubusercontent.com/111711434/200218318-aa40edc9-f51e-4789-a154-83c5181e0f09.png)
 
@@ -225,7 +225,7 @@ Demonstration:
 
 
 ## Notes
-
+```
 Sources utilized:
 1. https://www.geeksforgeeks.org/sql-injection-cheat-sheet/
 2. https://www.sqlinjection.net/union/
@@ -233,5 +233,4 @@ Sources utilized:
 4. https://owasp.org/www-community/attacks/Session_hijacking_attack
 5. https://portswigger.net/web-security/cross-site-scripting/cheat-sheet
 6. https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html
-	
 
